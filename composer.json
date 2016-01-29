@@ -1,0 +1,38 @@
+{
+    "name": "pyrex-fwi/audio-core-entities",
+    "description": "Core entities for Sapar audio project",
+    "authors": [
+        {
+            "name": "Christophe Pyree",
+            "email": "christophe.pyree@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "AudioCoreEntity": "./src/",
+            "AudioCoreEntity\\Tests": "./tests/",
+            "SymfonyStandard": "app/"
+        },
+        "classmap": ["src/","./tests/"]
+    },
+    "scripts": {
+        "ci:test-travis": [
+            "phpunit --coverage-html=coverage"
+        ],
+        "tests": [
+            "php vendor/bin/doctrine orm/info"
+        ]
+    },
+    "require": {
+        "doctrine/orm": "~2.2,>=2.2.3,<2.5"
+    },
+    "require-dev": {
+        "symfony/doctrine-bridge": "^3.0",
+        "symfony/validator": "^3.0",
+        "symfony/serializer": "^3.0",
+        "symfony/yaml": "*",
+        "doctrine/data-fixtures": "^1.1",
+        "phpunit/phpunit": "^5.1",
+        "satooshi/php-coveralls": "^1.0"
+    }
+}

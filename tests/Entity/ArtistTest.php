@@ -5,19 +5,19 @@ namespace AudioCoreEntity\Tests\Entity;
 
 use AudioCoreEntity\Tests\EntityBase;
 
-class GenreTest extends EntityBase
+class ArtistTest extends EntityBase
 {
 
     public function  testGenreMethods()
     {
-        $genre = self::getGenreInstance();
+        $artist = self::getArtistInstance();
         $media = self::getMediaInstance();
-        $genre
-            ->setName('Pop')
+        $artist
+            ->setName('Artist')
             ->setMedias($media);
-        $genre->getId();
-        $genre->getMedias();
-        $this->assertEquals('Pop', $genre->getName());
-        $this->assertEquals($media, $genre->getMedias());
+        $artist->getId();
+        $artist->getMedias();
+        $this->assertEquals('Artist', $artist->getName());
+        $this->assertEquals($media, $artist->getMedias());
     }
 }

@@ -1,0 +1,33 @@
+language: php
+php:
+  - 5.5
+  - 5.6
+  - 7.0
+
+services:
+  #- rabbitmq
+
+before_script:
+  - composer self-update
+  - wget http://get.sensiolabs.org/php-cs-fixer.phar
+  - rm -rf app/cache/*
+  - cat app/config/parameters.yml.travis > app/config/parameters.yml
+  #- mysql -e 'create database IF NOT EXISTS sf_audio_test;' -u travis
+  #- sudo apt-get update -qq
+  #- sudo apt-get install python -y
+  #- sudo apt-get install  -y mediainfo
+  #- whereis mediainfo
+  #- php app/console d:s:c --env=test
+
+
+install:
+  #- composer install --prefer-dist --no-interaction
+
+script:
+  - composer install -v
+  - composer ci:test-travis
+  #- phpunit -c app --debug --verbose
+  #- php php-cs-fixer.phar fix --no-interaction --dry-run --diff -vvv ./
+
+notifications:
+  mail: true

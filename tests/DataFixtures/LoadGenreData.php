@@ -1,15 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yemistikris
- * Date: 28/01/2016
- * Time: 16:48
- */
 
 namespace AudioCoreEntity\Tests\DataFixtures;
 
 
-class LoadGenreData
+use AudioCoreEntity\Entity\Genre;
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+
+class LoadGenreData implements FixtureInterface
 {
 
+    public function load(ObjectManager $manager)
+    {
+        $genre = new Genre();
+        $genre->setName('Pop');
+        $manager->persist($genre);
+        $manager->flush();
+    }
 }
