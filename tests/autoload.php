@@ -1,7 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yemistikris
- * Date: 28/01/2016
- * Time: 13:44
- */
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
+$loader = require __DIR__."/../vendor/autoload.php";
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+

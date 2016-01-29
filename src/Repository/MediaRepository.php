@@ -1,6 +1,6 @@
 <?php
 
-namespace AudioCore\Repository;
+namespace AudioCoreEntity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -12,5 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class MediaRepository extends EntityRepository
 {
-    
+
 }

@@ -1,15 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yemistikris
- * Date: 28/01/2016
- * Time: 17:28
- */
 
-namespace AudioCoreEntity\Tests\Êntity;
+namespace AudioCoreEntity\Tests\Entity;
 
 
-class GenreTest extends \PHPUnit_Framework_TestCase
+use AudioCoreEntity\Tests\EntityBase;
+
+class GenreTest extends EntityBase
 {
 
+    public function  testGenreMethods()
+    {
+        $genre = self::getGenreInstance();
+        $media = self::getMediaInstance();
+        $genre
+            ->setName('Pop')
+            ->setMedias($media);
+        $genre->getId();
+        $genre->getMedias();
+        $this->assertEquals('Pop', $genre->getName());
+        $this->assertEquals($media, $genre->getMedias());
+    }
 }
