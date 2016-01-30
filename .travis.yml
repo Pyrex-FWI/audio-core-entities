@@ -23,13 +23,13 @@ install:
   #- composer install --prefer-dist --no-interaction
 
 script:
-  - composer install -v
+  - composer install -v --no-dev
   - composer ci:test-travis
   #- phpunit -c app --debug --verbose
   #- php php-cs-fixer.phar fix --no-interaction --dry-run --diff -vvv ./
 
 after_success:
-  - travis_retry php vendor/bin/coveralls -v
+  #README.md- travis_retry php vendor/bin/coveralls -v
 
 notifications:
   mail: true
