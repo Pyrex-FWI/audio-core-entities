@@ -52,9 +52,9 @@ class Media
     protected $artist;
 
     /**
-     * @var int
+     * @var float|int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      * @Groups({"media-read"})
      */
     protected $bpm;
@@ -122,7 +122,7 @@ class Media
      */
     protected $fileName;
     /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default":false})
      * @Groups({"media-read"})
@@ -261,7 +261,7 @@ class Media
     }
 
     /**
-     * @return int
+     * @return float|int
      */
     public function getBpm()
     {
@@ -269,13 +269,13 @@ class Media
     }
 
     /**
-     * @param int $bpm
+     * @param float|int $bpm
      * @return Media
      */
     public function setBpm($bpm)
     {
         if (filter_var($bpm, FILTER_VALIDATE_INT) || filter_var($bpm, FILTER_VALIDATE_FLOAT)) {
-            if ( $bpm <= 160 && $bpm >= 60) {
+            if ($bpm <= 160 && $bpm >= 60) {
                 $this->bpm = abs($bpm);
             }
         }
@@ -283,7 +283,7 @@ class Media
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function getExist()
     {
@@ -291,7 +291,7 @@ class Media
     }
 
     /**
-     * @param string $exist
+     * @param bool $exist
      * @return $this
      */
     public function setExist($exist)
@@ -669,30 +669,6 @@ class Media
     }
 
     /**
-     * @todo refactor into subClass (audio implementation)
-     * @param $sampleItem
-     * @return int|null
-     */
-    public static function getProviderFromItem($sampleItem)
-    {
-        // @codeCoverageIgnoreStart
-        $provider = null;
-        if ($sampleItem instanceof AvdItem) {
-                $provider = Media::PROVIDER_AV_DISTRICT;
-        } elseif ($sampleItem instanceof FranchisePoolItem) {
-            if ($sampleItem->isAudio()) {
-                $provider = Media::PROVIDER_FRP_AUDIO;
-            } elseif ($sampleItem->isVideo()) {
-                $provider = Media::PROVIDER_FRP_VIDEO;
-            }
-        } elseif ($sampleItem  instanceof SvItem) {
-            $provider = Media::PROVIDER_SMASHVISION;
-        }
-        return $provider;
-        // @codeCoverageIgnoreEnd
-    }
-
-    /**
      * @return \DateTime
      */
     public function getDeletedAt()
@@ -770,7 +746,7 @@ class Media
                 $patern = '/^(?P<providerId>\d{1,9}\_\d{1,9})\_/';
             }
 
-            if (preg_match($patern, $fileName, $matches)){
+            if (preg_match($patern, $fileName, $matches)) {
                 $this->setProviderId($matches['providerId']);
             }
         }

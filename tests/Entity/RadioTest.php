@@ -18,10 +18,10 @@ class RadioTest extends EntityBase
         ];
         $radio
             ->setName('NRJ')
-            ->setHitPages($hitUrls)
+            ->setHitPagesUrls($hitUrls)
         ;
 
-        $this->assertContains($hitUrls[0], $radio->getHitPages());
+        $this->assertContains($hitUrls[0], $radio->getHitPagesUrls());
         $this->assertEquals('NRJ', $radio->getName());
         $radio->getId();
     }
