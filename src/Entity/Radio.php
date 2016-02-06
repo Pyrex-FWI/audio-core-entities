@@ -34,15 +34,15 @@ class Radio
     /**
      *
      * @todo refactor in favour of hitPagesUrls
-     * @var array
+     * @var ArrayCollection
      *
      * @ORM\Column(name="hitPages", type="json_array")
      */
-    private $hitPages;
+    private $hitPagesUrls;
 
     public function __construct()
     {
-        $this->hitPages = new ArrayCollection();
+        $this->hitPagesUrls = new ArrayCollection();
     }
 
     /**
@@ -82,15 +82,15 @@ class Radio
     /**
      * Set hitPages.
      *
-     * @param array $hitPages
+     * @param array $hitPagesUrls
      *
      * @return Radio
      */
-    public function setHitPages(array $hitPages)
+    public function setHitPagesUrls(array $hitPagesUrls)
     {
-        foreach ($hitPages as $hitPage) {
+        foreach ($hitPagesUrls as $hitPage) {
             if (filter_var($hitPage, FILTER_VALIDATE_URL)) {
-                $this->hitPages[] = $hitPage;
+                $this->hitPagesUrls[] = $hitPage;
             }
         }
 
@@ -102,8 +102,8 @@ class Radio
      *
      * @return array
      */
-    public function getHitPages()
+    public function getHitPagesUrls()
     {
-        return $this->hitPages;
+        return $this->hitPagesUrls;
     }
 }
