@@ -35,7 +35,7 @@ class Genre
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Media",mappedBy="genres")
+     * @ORM\ManyToMany(targetEntity="\AudioCoreEntity\Entity\Media",mappedBy="genres")
      * @Groups({"genre-read"})
      **/
     private $medias;

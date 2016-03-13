@@ -22,25 +22,9 @@ use DeejayPoolBundle\Entity\FranchisePoolItem;
  *
  * )
  * @ORM\Entity(repositoryClass="AudioCoreEntity\Repository\MediaRepository")
- * @UniqueEntity(fields={"provider","fileName"})
  */
 class Media
 {
-
-    const PROVIDER_DIGITAL_DJ_POOL  = 1;
-    const PROVIDER_AV_DISTRICT      = 2;
-    const PROVIDER_FRP_AUDIO        = 3;
-    const PROVIDER_FRP_VIDEO        = 4;
-    const PROVIDER_SMASHVISION      = 5;
-
-    static public $providers = [
-        'av_district'       => self::PROVIDER_AV_DISTRICT,
-        'frp_video'         => self::PROVIDER_FRP_VIDEO,
-        'frp_audio'         => self::PROVIDER_FRP_AUDIO,
-        'ddp'               => self::PROVIDER_DIGITAL_DJ_POOL,
-        'sv'                => self::PROVIDER_SMASHVISION,
-    ];
-
     const MEDIA_TYPE_AUDIO          = 1;
     const MEDIA_TYPE_VIDEO          = 2;
     /**
@@ -52,9 +36,9 @@ class Media
     protected $artist;
 
     /**
-     * @var float|int
+     * @var int
      *
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"media-read"})
      */
     protected $bpm;
@@ -66,7 +50,6 @@ class Media
      *
      */
     protected $fullPath;
-
     /**
      * @var string
      *
@@ -75,7 +58,6 @@ class Media
      *
      */
     protected $fullFilePathMd5;
-
     /**
      * @var string
      *
@@ -84,8 +66,6 @@ class Media
      *
      */
     protected $dirName;
-
-
     /**
      * @var string
      *
@@ -122,7 +102,7 @@ class Media
      */
     protected $fileName;
     /**
-     * @var boolean
+     * @var string
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default":false})
      * @Groups({"media-read"})
@@ -158,7 +138,7 @@ class Media
      */
     protected $id;
     /**
-     * @ORM\ManyToMany(targetEntity="Genre", inversedBy="medias", cascade={"persist", "detach", "refresh"}, fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="\AudioCoreEntity\Entity\Genre", inversedBy="medias", cascade={"persist", "detach", "refresh"}, fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="media_genre",
      *      joinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="genre_id", referencedColumnName="id")}
@@ -168,7 +148,7 @@ class Media
      **/
     protected $genres;
     /**
-     * @ORM\ManyToMany(targetEntity="Artist", inversedBy="medias", cascade={"persist", "detach", "refresh"}, fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="\AudioCoreEntity\Entity\Artist", inversedBy="medias", cascade={"persist", "detach", "refresh"}, fetch="EXTRA_LAZY")
      * @ORM\JoinTable(
      *      joinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="artist_id", referencedColumnName="id")}
@@ -194,10 +174,10 @@ class Media
     /**
      * @var integer
      *
-     * @ORM\Column(name="provider", type="integer")
+     * ORM\Column(name="provider", type="integer")
      * @Groups({"media-read"})
      */
-    protected $provider;
+    //protected $provider;
 
     /**
      * @var integer
@@ -261,7 +241,7 @@ class Media
     }
 
     /**
-     * @return float|int
+     * @return int
      */
     public function getBpm()
     {
@@ -269,13 +249,13 @@ class Media
     }
 
     /**
-     * @param float|int $bpm
+     * @param int $bpm
      * @return Media
      */
     public function setBpm($bpm)
     {
         if (filter_var($bpm, FILTER_VALIDATE_INT) || filter_var($bpm, FILTER_VALIDATE_FLOAT)) {
-            if ($bpm <= 160 && $bpm >= 60) {
+            if ( $bpm <= 160 && $bpm >= 60) {
                 $this->bpm = abs($bpm);
             }
         }
@@ -283,7 +263,7 @@ class Media
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function getExist()
     {
@@ -291,7 +271,7 @@ class Media
     }
 
     /**
-     * @param bool $exist
+     * @param string $exist
      * @return $this
      */
     public function setExist($exist)
@@ -602,7 +582,7 @@ class Media
     public function setFileName($fileName)
     {
         $this->fileName = $fileName;
-        $this->updateProviderId();
+
         return $this;
     }
 
@@ -647,28 +627,6 @@ class Media
     }
 
     /**
-     * Set provider
-     *
-     * @param integer $provider
-     * @return Media
-     */
-    public function setProvider($provider)
-    {
-        if (!in_array($provider, self::getProviders())) {
-            throw new \InvalidArgumentException(sprintf('%s is not a valid provider. See %s::%s', $provider, self::class, 'getProviders()'));
-        }
-
-        $this->provider = $provider;
-        $this->updateProviderId();
-        return $this;
-    }
-
-    public static function getProviders()
-    {
-        return self::$providers;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getDeletedAt()
@@ -704,9 +662,9 @@ class Media
         return $this;
     }
     public function isUntaged() {
-    // @codeCoverageIgnoreStart
+        // @codeCoverageIgnoreStart
         return !$this->tagged;
-    // @codeCoverageIgnoreEnd
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -746,7 +704,7 @@ class Media
                 $patern = '/^(?P<providerId>\d{1,9}\_\d{1,9})\_/';
             }
 
-            if (preg_match($patern, $fileName, $matches)) {
+            if (preg_match($patern, $fileName, $matches)){
                 $this->setProviderId($matches['providerId']);
             }
         }
