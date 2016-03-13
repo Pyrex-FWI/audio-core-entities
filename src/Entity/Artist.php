@@ -32,7 +32,7 @@ class Artist
      */
     private $name;
     /**
-     * @ORM\ManyToMany(targetEntity="Media",mappedBy="artists")
+     * @ORM\ManyToMany(targetEntity="\AudioCoreEntity\Entity\Media",mappedBy="artists")
      * @Groups({"artist-read"})
      **/
     private $medias;

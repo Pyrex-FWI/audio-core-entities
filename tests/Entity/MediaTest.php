@@ -19,7 +19,6 @@ class MediaTest extends EntityBase
 
         $md5 = md5('md5');
         $media
-            ->setProvider(1)
             ->setArtist('ArtistName')
             ->setTitle('Title')
             ->setGenres(new ArrayCollection([$genre]))
@@ -30,7 +29,6 @@ class MediaTest extends EntityBase
             ->setFullFilePathMd5($md5)
             ->setFullPath(__DIR__)
             ->setReleaseDate(new \DateTime('now'))
-            ->setProviderUrl('http://www.se.dom')
             ->setScore(3)
             ->setTagged(true)
             ->setType(2)
@@ -56,11 +54,8 @@ class MediaTest extends EntityBase
         $this->assertEquals($media->getFileName(), 'Entity');
         $this->assertEquals($media->getFullFilePathMd5(), md5(__DIR__));
         $this->assertEquals($media->getFullPath(), __DIR__);
-        $this->assertEquals($media->getProviderUrl(), 'http://www.se.dom');
         $this->assertEquals($media->getScore(), 3);
-        $this->assertEquals($media->getProviderId(), 'XXXX');
         $this->assertEquals($media->getVersion(), 'Explicit');
-        $this->assertEquals($media->getProviderCode(), 'ddp');
         $this->assertEquals($media->getDirName(), 'tests');
         $media->getId();
         $this->assertEquals($media->getType(), 2);
@@ -86,28 +81,6 @@ class MediaTest extends EntityBase
     {
         $this->assertArrayHasKey('audio', self::getMediaInstance()->getTypes());
         $this->assertArrayHasKey('video', self::getMediaInstance()->getTypes());
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testWrongProvider()
-    {
-        self::getMediaInstance()->setProvider(100);
-    }
-
-    public function testProviders()
-    {
-        $this->assertArrayHasKey('av_district', self::getMediaInstance()->getProviders());
-        $this->assertArrayHasKey('frp_video', self::getMediaInstance()->getProviders());
-        $this->assertArrayHasKey('frp_audio', self::getMediaInstance()->getProviders());
-        $this->assertArrayHasKey('ddp', self::getMediaInstance()->getProviders());
-        $this->assertArrayHasKey('sv', self::getMediaInstance()->getProviders());
-    }
-
-    public function testWrongProviderUrl()
-    {
-        $this->assertNull(self::getMediaInstance()->setProviderUrl('toto')->getProviderUrl());
     }
 
     public function testWrongYear()
