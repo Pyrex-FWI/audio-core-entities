@@ -34,7 +34,6 @@ class MediaTest extends EntityBase
             ->setType(2)
             ->setYear(2000)
             ->setVersion('Explicit')
-            ->setProviderId('XXXX')
             ->addGenre($addGenre)
             ->removeGenre($addGenre)
             ->addArtist($addArtist)
