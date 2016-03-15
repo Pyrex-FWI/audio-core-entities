@@ -74,13 +74,6 @@ class Media
      */
     protected $title;
     /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"media-read"})
-     */
-    protected $providerUrl;
-    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -172,22 +165,6 @@ class Media
      */
     protected $year;
     /**
-     * @var integer
-     *
-     * ORM\Column(name="provider", type="integer")
-     * @Groups({"media-read"})
-     */
-    //protected $provider;
-
-    /**
-     * @var integer
-     * @todo change property name to externalId and update related method
-     * @ORM\Column(type="string", length=30, nullable=true)
-     * @Groups({"media-read"})
-     */
-    protected $providerId;
-
-    /**
      *
      */
     public function __construct()
@@ -277,31 +254,6 @@ class Media
     public function setExist($exist)
     {
         $this->exist = $exist;
-        return $this;
-    }
-
-    /**
-     * Get downloadlink.
-     *
-     * @return string
-     */
-    public function getProviderUrl()
-    {
-        return $this->providerUrl;
-    }
-
-    /**
-     * Set downloadlink.
-     *
-     * @param string $providerUrl
-     *
-     * @return Media
-     */
-    public function setProviderUrl($providerUrl)
-    {
-        if (filter_var($providerUrl, FILTER_VALIDATE_URL)) {
-            $this->providerUrl = $providerUrl;
-        }
         return $this;
     }
 
@@ -412,24 +364,6 @@ class Media
 
         $this->type = $type;
 
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProviderId()
-    {
-        return $this->providerId;
-    }
-
-    /**
-     * @param int $providerId
-     * @return Media
-     */
-    public function setProviderId($providerId)
-    {
-        $this->providerId = $providerId;
         return $this;
     }
 
@@ -607,26 +541,6 @@ class Media
     }
 
     /**
-     * @return array
-     * @Groups({"media-read"})
-     */
-    public function getProviderCode()
-    {
-        $key = array_search($this->getProvider(), $this->getProviders());
-        return $key;
-    }
-
-    /**
-     * Get provider
-     *
-     * @return integer
-     */
-    public function getProvider()
-    {
-        return $this->provider;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getDeletedAt()
@@ -685,32 +599,6 @@ class Media
             $this->year = $year;
         }
         return $this;
-    }
-
-
-    /**
-     * @todo Refactor. Implementation specific
-     * @return $this
-     */
-    public function updateProviderId()
-    {
-        // @codeCoverageIgnoreStart
-        $fileName   = $this->getFileName();
-        $provider   = $this->getProvider();
-        $patern     = '/^(?P<providerId>\d{1,9})\_/';
-
-        if ($fileName && $provider && in_array($provider, $this->getProviders())) {
-            if ($provider === Media::PROVIDER_SMASHVISION) {
-                $patern = '/^(?P<providerId>\d{1,9}\_\d{1,9})\_/';
-            }
-
-            if (preg_match($patern, $fileName, $matches)){
-                $this->setProviderId($matches['providerId']);
-            }
-        }
-
-        return $this;
-        // @codeCoverageIgnoreEnd
     }
 
     /**
