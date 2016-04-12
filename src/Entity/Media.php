@@ -95,7 +95,7 @@ class Media
      */
     protected $fileName;
     /**
-     * @var string
+     * @var boolean
      *
      * @ORM\Column(type="boolean", nullable=false, options={"default":false})
      * @Groups({"media-read"})
@@ -232,7 +232,7 @@ class Media
     public function setBpm($bpm)
     {
         if (filter_var($bpm, FILTER_VALIDATE_INT) || filter_var($bpm, FILTER_VALIDATE_FLOAT)) {
-            if ( $bpm <= 160 && $bpm >= 60) {
+            if ($bpm <= 160 && $bpm >= 60) {
                 $this->bpm = abs($bpm);
             }
         }
@@ -276,7 +276,7 @@ class Media
      */
     public function setFullPath($fullPath)
     {
-        $pattern = '#('.DIRECTORY_SEPARATOR.')\1+#';
+        $pattern = '#(' .DIRECTORY_SEPARATOR.')\1+#';
         $replacement = DIRECTORY_SEPARATOR;
         $fullPath = preg_replace($pattern, $replacement, $fullPath);
 
@@ -447,7 +447,7 @@ class Media
     }
 
     /**
-     * @param Genre $artist
+     * @param Artist $artist
      * @return $this
      */
     public function removeArtist(Artist $artist)
@@ -602,7 +602,7 @@ class Media
     }
 
     /**
-     * @return string
+     * @return boolean
      */
     public function getTagged()
     {
