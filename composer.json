@@ -24,7 +24,7 @@
         ]
     },
     "require": {
-        "doctrine/orm": "~2.2,>=2.2.3,<=2.5"
+        "doctrine/orm": "~2.2,>=2.2.3,<=2.5.9"
     },
     "require-dev": {
         "symfony/doctrine-bridge": "^3.0",
