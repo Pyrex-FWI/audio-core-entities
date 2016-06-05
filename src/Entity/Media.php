@@ -16,12 +16,10 @@ use DeejayPoolBundle\Entity\FranchisePoolItem;
  * Media
  *
  * @ORM\Table(
- *      indexes={@ORM\Index(name="profider_filename", columns={"providerId", "fileName"})},
+ *      indexes={@ORM\Index(name="profider_filename", columns={"fileName"})},
  *      uniqueConstraints={@UniqueConstraint(name="full_file_path_md5", columns={"fullFilePathMd5"})},
  *      options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"}
- *
  * )
- * @ORM\Entity(repositoryClass="AudioCoreEntity\Repository\MediaRepository")
  */
 class Media
 {
