@@ -1,8 +1,12 @@
 <?php
-
+/**
+ * @author: Pyrex-Fwi
+ */
 namespace AudioCoreEntity\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Album
@@ -12,6 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Album
 {
+    use TimestampableEntity;
+
     /**
      * @var integer
      *
@@ -36,6 +42,12 @@ class Album
      */
     private $cover;
 
+    /**
+     * @var string
+     * @Gedmo\Slug(fields={"name"}, unique=true)
+     * @ORM\Column(type="string", length=128, unique=true)
+     */
+    protected $slug;
 
     /**
      * Get id
@@ -94,5 +106,13 @@ class Album
         // @codeCoverageIgnoreStart
         return $this->cover;
         // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

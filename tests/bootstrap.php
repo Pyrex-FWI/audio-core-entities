@@ -49,8 +49,6 @@ class Bootstrap {
         $platform = $entityManager->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
 
-
-
         return $entityManager;
     }
 }
