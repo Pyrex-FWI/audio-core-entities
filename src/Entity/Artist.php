@@ -5,6 +5,8 @@ namespace AudioCoreEntity\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Artist
@@ -14,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Artist
 {
+    use TimestampableEntity;
 
     /**
      * @var integer
@@ -38,6 +41,13 @@ class Artist
     private $medias;
 
     /**
+     * @var string
+     * @Gedmo\Slug(fields={"name"}, unique=true)
+     * @ORM\Column(type="string", length=128, unique=true)
+     */
+    protected $slug;
+
+    /**
      * Artist constructor.
      * @param null $name
      */
@@ -46,7 +56,6 @@ class Artist
         $this->setName($name);
         $this->medias = new ArrayCollection();
     }
-
 
     /**
      * Get id
@@ -94,5 +103,11 @@ class Artist
         return $this;
     }
 
-
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }

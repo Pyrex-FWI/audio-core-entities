@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * RadioHit.
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AudioCoreEntity\Repository\RadioHitRepository")
  */
 class RadioHit
 {
@@ -139,6 +139,7 @@ class RadioHit
     public function __construct()
     {
         $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created = new \DateTime('now');
     }
 
     /**
